@@ -28,7 +28,6 @@ router.get('/', function (req, res) {
                       jsonArray.push(rowObject)
                   });
                   res.send(jsonArray);
-                  process.exit();
           }
           );
     Cartago.execSql(request);
