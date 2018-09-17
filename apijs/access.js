@@ -29,17 +29,16 @@ var SJConfig = {
     password: '4Gn4kt0r',
     server: 'heredia-central.database.windows.net',
     options:{
-           database: 'heredia-central',
+           database: 'Central-Heredia',
            encrypt: true,
            rowCollectionOnRequestCompletion: true
        }
   }
 
-//var SanJose = new Connection(SJConfig);
+var SanJose = new Connection(SJConfig);
 var Cartago = new Connection(CAConfig);
-//var Heredia = new Connection(HEConfig);
+var Heredia = new Connection(HEConfig);
 
-
-//module.exports = SanJose;
+module.exports = SanJose;
 module.exports = Cartago;
-//module.exports = Heredia;
+module.exports = Heredia;
