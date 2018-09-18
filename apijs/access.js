@@ -55,41 +55,32 @@ function isON(branch){
 
 var ConnectDB = function(query,branch,callback){
 
-        request = new Request(query,
-               function(err, rowCount, rows){
-                      jsonArray = [];
-                      rows.forEach(function (columns) {
-                          var rowObject ={};
-                          columns.forEach(function(column) {
-                              rowObject[column.metadata.colName] = column.value;
-                          });
-                          jsonArray.push(rowObject)
-                      });
-                      callback(jsonArray);
-              }
-        );
+    request = new Request(query,
+        function(err, rowCount, rows){
+            if (err){
+                console.log(branch +" caido")
+                if (branch!="HE"){
+                    ConnectDB(query,"HE",function(json){
+                    callback(json);
+                    });
+                }else callback({error:'Cant acces the database'});
+            }else{
+                jsonArray = [];
+                rows.forEach(function (columns) {
+                    var rowObject ={};
+                    columns.forEach(function(column) {
+                        rowObject[column.metadata.colName] = column.value;
+                    });
+                    jsonArray.push(rowObject)
+                });
+                callback(jsonArray);
+            }
+        }
+    );
 
         if (branch=="SJ")SanJose.execSql(request);
         else if (branch=="CA")Cartago.execSql(request);
         else if (branch=="HE")Heredia.execSql(request);
-        /*if (branch=="SJ"){
-            if (isON(SanJose))SanJose.execSql(request);
-            else {
-                if (isON(Heredia))Heredia.execSql(request)
-                else console.log("no conection avalable"); 
-            }
-        }else if (branch=="CA"){
-            if (isON(Cartago))Cartago.execSql(request);
-            else {
-                if (isON(Heredia))Heredia.execSql(request)
-                else console.log("no conection avalable"); 
-            }
-        }else if (branch=="HE"){
-            if (isON(Heredia))Heredia.execSql(request)
-                else console.log("no conection avalable"); 
-        }*/
-
-        
     };
 
 module.exports = ConnectDB;
