@@ -37,21 +37,9 @@ var SJConfig = {
        }
   }
 
-
 var SanJose = new Connection(SJConfig);
 var Cartago = new Connection(CAConfig);
 var Heredia = new Connection(HEConfig);
-
-
-function isON(branch){
-    branch.on('connect', function(err){
-        if (err){
-            console.log(err)
-            return false;
-        }else return true;
-    });    
-}
-
 
 var ConnectDB = function(query,branch,callback){
 
