@@ -13,13 +13,19 @@ export class AdmProductAverageComponent  extends DateRangeContainer implements O
     super();
    }
 
-  clients = [
-    {name:'Cliente 1',id:'id product',average:5},
-    {name:'Cliente 2',id:'id product2',average:16},
-    {name:'Cliente 3',id:'id product3',average:8}
-  ];
-  pages = [{value:1},{value:4},{value:3},{value:4}]
-  
+  clients;
+  err;
   ngOnInit() {
   }
+
+
+  getAverage(){
+    console.log(this.dateRange)
+    this.adminService.clientsAverage(this.dateRange[0].date,this.dateRange[1].date,this.dateRange[0].valid,this.dateRange[1].valid).subscribe(
+      data => this.clients = data,
+      error => this.err = error
+    );    
+  }
+
+  
 }

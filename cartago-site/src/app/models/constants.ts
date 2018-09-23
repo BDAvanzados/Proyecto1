@@ -15,10 +15,10 @@ export class Constants {
     static USERNAME : string  = 'nombre';
     static IS_LOGGED : string = 'true';
 
-    static ROL_MANAGER : number = 3;
-    static ROL_CLIENT_GOLD : number = 0;
-    static ROL_CLIENT_PLATINUM : number = 1;
-    static ROL_ADMIN : number = 2;
+    static ROL_MANAGER : string = "3";
+    static ROL_CLIENT_GOLD : string = "0";
+    static ROL_CLIENT_PLATINUM : string = "1";
+    static ROL_ADMIN : string = "2";
 
     static USER_DATA : string = 'user-data';
 

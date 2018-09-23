@@ -42,17 +42,23 @@ export class AuthenticationService {
   }
 
   private setUpUser(userdata : any, usertype : string){
+    console.log("user data is: ")
+    console.log(userdata)
     this.storage.setUserType(usertype);
     this.storage.setUserData(JSON.stringify(userdata));
     this.storage.setUserName(userdata[Constants.USERNAME]);
   }
 
   private saveUserData(data : any) : boolean{
+    
     console.log('data is: ' +  data);
     console.log(data);
+
+
     //if the data user is correct save it! and reload the page
     if(data != null && data.status == null){
-      console.log(data);
+      console.log('inserting user data: ')
+      console.log('rol: ' + data.rolId)
       this.storage.setAsLogged();
       switch (data.rolId) {
         case Constants.ROL_ADMIN:
@@ -68,11 +74,13 @@ export class AuthenticationService {
           this.setUpUser(data,Constants.MANAGER_TYPE);
         break;
         default:
+          console.log('Default!');
           break;
       }
       this.goTo(Constants.HOME_PATH);
     }
     else{
+      console.log("else case!")
       if (data == null)alert("Error!")
       else if (data.err == Constants.DATABASE_CONEXION_ERROR)
         alert('No se puede comunicar con el servidor');
@@ -96,21 +104,6 @@ export class AuthenticationService {
     
     query_data.subscribe(data => this.saveUserData(data),
                         error => serror = error);
-
-    if (this.sdata == null){
-      if (user.name == Constants.ADMIN && user.password == Constants.ADMIN){
-        this.storage.setAsLogged();
-        this.storage.setUserType(Constants.ADMIN_TYPE);
-        this.storage.setUserName(user.name);
-        this.goTo(Constants.HOME_PATH);
-      }
-      else if (user.name == Constants.CLIENT && user.password == Constants. CLIENT){
-        this.storage.setAsLogged();
-        this.storage.setUserType(Constants.CLIENT_TYPE);
-        this.storage.setUserName(user.name);
-        this.goTo(Constants.HOME_PATH);
-      }
-    }
   }
 
   public logout() : void{

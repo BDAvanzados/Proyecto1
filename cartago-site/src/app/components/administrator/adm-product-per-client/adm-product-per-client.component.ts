@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { DateRangeContainer } from '../../../helpers/date-range-container';
 import { AdministratorService } from '../../../services/admin/administrator.service';
+import { Client } from '../../../models/client';
+import { Package } from '../../../models/package';
 
 @Component({
   selector: 'adm-product-per-client',
@@ -16,40 +18,32 @@ export class AdmProductPerClientComponent extends DateRangeContainer implements 
   }
 
   ngOnInit() {
+
+    if (this.currentClient != null)this.updatePackages(null);
   }
 
+  packages : Package[];
 
-
-  clients = [
-    {name:'Cliente 1',id:'id product',packages:5},
-    {name:'Cliente 2',id:'id product2',packages:16},
-    {name:'Cliente 3',id:'id product3',packages:8},
-    {name:'Cliente 3',id:'id product3',packages:8},
-    {name:'Cliente 3',id:'id product3',packages:8},
-    {name:'Cliente 3',id:'id product3',packages:8},
-    {name:'Cliente 3',id:'id product3',packages:8},
-    {name:'Cliente 3',id:'id product3',packages:8}
-  ];
-
-  pages = [
-    {value: 1},{value: 2},{value: 3},{value: 4}
-  ]
+  clients = [];
 
   error : string;
 
-  public processClients(data){
-    if (data.status){
-      this.error = "";
-      this.clients =  data.data;
-    }
-    else{
-      this.error = "Debe seleccionar ambas fechas";
-    }
+  currentClient : Client;
 
+  public processClients(data){
+    this.clients =  data;
+    console.log(this.clients);
   }
 
   public processError(error){
+    
+  }
 
+
+  showModal(){
+    $('#exampleModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    })
   }
 
   getClients(){
@@ -60,6 +54,49 @@ export class AdmProductPerClientComponent extends DateRangeContainer implements 
     );
 
   }
+
+  processPackages(data : Package[]){
+    this.packages = data;
+  }
+
+  askForClientPackages(client:Client){   
+    this.currentClient = client;
+    this.adminService.getClientProducts(client,this.dateRange[0].date,this.dateRange[1].date).subscribe(
+      data => this.processPackages(data),
+      error => this.error = error
+    );
+  }
+
+
+  checkPackage(ppackage : Package){
+    let packagecp = ppackage;
+    this.adminService.checkPackage(packagecp, this.currentClient).subscribe(
+      data => console.log(data),
+      error => console.log(error)
+    );
+    this.eventMess.emit();
+    //this.sendSignalUpdatePackages();
+  }
+
+  @Output() eventMess = new EventEmitter();
+
+  public updatePackages($event){
+    console.log("updating!");
+    this.adminService.getClientProducts(this.currentClient,this.dateRange[0].date,this.dateRange[1].date).subscribe(
+      data => this.processPackages(data),
+      error => this.error = error
+    );
+  }
+
+  @Input() updatePack(){
+
+  }
+
+  public sendSignalUpdatePackages(){
+    console.log("signal!");
+    this.eventMess.emit();
+  }
+
 
 
 }

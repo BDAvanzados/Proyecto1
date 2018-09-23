@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../services/client.service';
 import { ClientPackage } from '../../models/client-package';
+import { CommonService } from '../../services/common.service';
 
 @Component({
   selector: 'app-client',
@@ -9,10 +10,11 @@ import { ClientPackage } from '../../models/client-package';
 })
 export class ClientComponent implements OnInit {
 
-  constructor(private clientService : ClientService) { }
+  constructor(private clientService : ClientService, private commonService : CommonService) { }
 
 
   packages : ClientPackage [] = [];
+  availablepgk;
   cart = [];
   buy = [];
 
@@ -31,6 +33,17 @@ export class ClientComponent implements OnInit {
 
   buyEmpty(){
     return this.buy.length == 0;
+  }
+
+  getAllAvailablePackage(){
+    this.commonService.getAllPackages().subscribe(
+      data => this.availablepgk = data,
+      error => console.log("error") 
+    )
+  }
+
+  addPackage(){
+    
   }
 
 }

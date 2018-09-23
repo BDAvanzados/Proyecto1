@@ -13,31 +13,68 @@
 
   <ul class="list-group">
     <li *ngFor="let client of clients" class="list-group-item d-flex justify-content-between align-items-center">
-      {{client.name}}
+      {{client.nombre}}
       <div>
-        <span class="badge badge-primary badge-pill bg-success">paquetes: {{client.packages}}</span>
-        <a href="#"> mas info...</a>
+        total comprado: {{client.totalbough}} (incluye monto por el servicio)
+      </div>
+      <div>
+          <span class="badge badge-primary badge-pill bg-success">paquetes: {{client.paquetes}}</span>
+      </div>
+      <div>
+        <div class="btn btn-warning" (click)="askForClientPackages(client)" data-toggle="modal" data-target="#exampleModal"> mas info...</div>
+
       </div>
 
 
     </li>
   </ul>
 
-  <div class="adm-paginator">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination justify-content-center">
-        <li class="page-item adm-page-item">
-          <a class="page-link" href="#">Previous</a>
-        </li>
-        <li *ngFor="let page of pages" class="page-item adm-page-item">
-          <a class="page-link" href="#">{{page.value}}</a>
-        </li>
-        <li class="page-item adm-page-item">
-          <a class="page-link" href="#">Next</a>
-        </li>
+  <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Paquetes del Cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="list-group">
 
-      </ul>
-    </nav>
-  </div>
+              <li *ngFor="let package of packages" class="list-group-item d-flex justify-content-between align-items-center">
+                <div>{{package.tipo}}</div>
+                <div>
+                    <span class="badge badge-primary badge-pill bg-primary">
+                        categoria: {{package.categoria}}
+                    </span>
+                    <span class="badge badge-primary badge-pill bg-warning">
+                        servicio: {{package.monto_servicio}}
+                    </span>
+                    <span class="badge badge-primary badge-pill bg-warning">
+                        costo: {{package.valor}}
+                    </span>
+                    <br>
+                    <i>descripcion: {{package.descripcion}}</i>
+                  </div>
+                <div>
+                  <div *ngIf='package.estado==1' class="badge badge-primary badge-pill bg-success">
+                    Recogido
+                  </div>
+                  <div  (eventMess)="updatePackages($event)" *ngIf='package.estado==0' class="btn btn-danger" (click)="checkPackage(package)">
+                      Asignar como recogido
+                    </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 </div>

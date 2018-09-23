@@ -2,6 +2,8 @@ import { User } from "../models/user";
 import { QueryReadType } from "@angular/core/src/render3/interfaces/query";
 import { StorageManager } from "./storage-manager";
 import { UserData } from "../models/user-data";
+import { Client } from "../models/client";
+import { Package } from "../models/package";
 
 //importing the server path
 //@ts-ignore
@@ -51,7 +53,9 @@ export class QueryBuilder {
     }
 
     private date2Str(date : Date ) : string {
-        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+        let day = (date.getMonth()+1);
+        //if (day < 10)
+        return date.getFullYear() + "-" + day + "-" + date.getDate();
     }
 
     public getClients(dateFrom : Date, dateTo : Date) : string{
@@ -65,6 +69,50 @@ export class QueryBuilder {
 
     }
 
+    public getClientProducts(client : Client, datea : string, dateb : string){
+        let path : string  = 'admi/clientsmypkgs/' + QueryBuilder.sucursal_id + 
+            '/' + client.clientId + '/'+ datea + '/' + dateb;
+        console.log(QueryBuilder.server + path);
+        return QueryBuilder.server + path;
+    }
+
+    public checkPackage(data : {
+        clientId : string,
+        sucursalId : string,
+        date : Date,
+        pgk : string
+      }){
+        let path : string  = 'admi/updatepkg/' + data.sucursalId + '/'+ data.clientId  
+              + '/' +data.pgk + '/' + data.date.toJSON().slice(0,10);
+        console.log(QueryBuilder.server + path);
+        return QueryBuilder.server + path;
+    }
+
+    public static sucursalID(){
+        return QueryBuilder.sucursal_id;
+    }
+
+    public average(dateleft,dateb){
+        console.log(dateleft)
+        console.log(dateb)
+        let path : string  = 'admi/averageperclient/' + QueryBuilder.sucursal_id + '/'+ 
+        dateleft + '/' + dateb;
+        console.log(QueryBuilder.server + path);
+        return QueryBuilder.server + path;
+    }
+
+    public allPackage(){
+        return QueryBuilder.server + 'admi/pkgs/' + QueryBuilder.sucursalID();
+    }
+
+
+    public addPackage(pkg : Package){
+        let sm : StorageManager = new StorageManager();
+        let userdata: UserData = JSON.parse(sm.getUserData());
+
+        return QueryBuilder.server + 'admi/addpkgs/' + QueryBuilder.sucursalID() +"/"+ userdata.clientId
+        + "/" + pkg.id;
+    }
 
 
 }

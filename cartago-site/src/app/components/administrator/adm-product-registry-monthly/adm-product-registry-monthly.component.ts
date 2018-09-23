@@ -13,38 +13,28 @@ export class AdmProductRegistryMonthlyComponent implements OnInit {
   }
 
   months = [
-    {name:"Enero"},
-    {name:"Febrero"},
-    {name:"Marzo"},
+    {name:"Enero", value : 1},
+    {name:"Febrero", value : 2},
+    {name:"Marzo", value : 3},
     //
-    {name:"Abril"},
-    {name:"Mayo"},
-    {name:"Junio"},
+    {name:"Abril", value : 4},
+    {name:"Mayo", value : 5},
+    {name:"Junio", value : 6},
     //
-    {name:"Julio"},
-    {name:"Agosto"},
-    {name:"Setiembre"},
+    {name:"Julio", value : 7},
+    {name:"Agosto", value : 8},
+    {name:"Setiembre", value : 9},
     //
-    {name:"Octubre"},
-    {name:"Noviembre"},
-    {name:"Diciembre"},
+    {name:"Octubre" , value : 10},
+    {name:"Noviembre", value : 11},
+    {name:"Diciembre", value : 12},
   ]
 
   packages = [
-    {name:'Package 1', sold: 5},
-    {name:'Package 2', sold: 4},
-    {name:'Package 3', sold: 7},
-    {name:'Package 4', sold: 9},
-    {name:'Package 5', sold: 15}
   ]
 
 
   pages=[
-    {value:1},
-    {value:2},
-    {value:3},
-    {value:4},
-    {value:5}
   ]
 
 
