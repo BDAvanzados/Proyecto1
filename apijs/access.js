@@ -1,6 +1,7 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
 
+var TYPES = require('tedious').TYPES;
 
 var SJConfig = {
     userName: 'agnaktor',
@@ -74,4 +75,38 @@ var ConnectDB = function(query,branch,callback){
         else if (branch=="HE")Heredia.execSql(request);
     };
 
-module.exports = ConnectDB;
+var ConnectST = function(str,params,branch,callback){
+
+    request = new Request(str,function(err, rowCount, rows){
+
+            jsonArray = [];
+            rows.forEach(function (columns) {
+                    var rowObject ={};
+                    columns.forEach(function(column) {
+                        rowObject[column.metadata.colName] = column.value;
+                    });
+                    jsonArray.push(rowObject)
+            });
+            callback(jsonArray);
+            }  
+    );
+    
+    params.forEach(param => {
+        request.addParameter(param.name,param.type,param.value);
+    });
+
+
+    branch = 'HE';
+
+    if (branch=="SJ")
+        SanJose.callProcedure(request);
+    else if (branch=="CA")
+        Cartago.callProcedure(request);
+    else if (branch=="HE"){
+
+        Heredia.callProcedure(request);
+    }
+};
+
+    module.exports = ConnectDB;
+    module.exports = ConnectST;
