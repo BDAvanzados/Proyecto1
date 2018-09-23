@@ -8,7 +8,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 //obtiene el monto promedio por cliente en un rago de fechas
-router.get('/:site/average/:initialDate/:endDate', function (req, res) {
+router.get('/average/:site/:initialDate/:endDate', function (req, res) {
     site = req.params.site;
     initialDate = req.params.initialDate;
     endDate = req.params.endDate;
@@ -23,7 +23,7 @@ router.get('/:site/average/:initialDate/:endDate', function (req, res) {
   });
 
 //obtiene los paquetes por cliente en un rango de fechas
-router.get('/:site/package/:initialDate/:endDate', function(req, res){
+router.get('/package/:site/:initialDate/:endDate', function(req, res){
     site = req.params.site;
     initialDate = req.params.initialDate;
     endDate = req.params.endDate;
@@ -37,7 +37,7 @@ router.get('/:site/package/:initialDate/:endDate', function(req, res){
   });
 
 //obtiene los top 3 clientes en un rango de fechas
-router.get('/:site/top/:initialDate/:endDate', function(req, res){
+router.get('/top/:site/:initialDate/:endDate', function(req, res){
     initialDate = req.params.initialDate;
     endDate = req.params.endDate;
     site = req.params.site;

@@ -78,7 +78,8 @@ var ConnectDB = function(query,branch,callback){
 var ConnectST = function(str,params,branch,callback){
 
     request = new Request(str,function(err, rowCount, rows){
-
+        if (err) callback({status:false ,error:'Cant acces StoreProcedure'});
+        else{ 
             jsonArray = [];
             rows.forEach(function (columns) {
                     var rowObject ={};
@@ -88,24 +89,17 @@ var ConnectST = function(str,params,branch,callback){
                     jsonArray.push(rowObject)
             });
             callback(jsonArray);
-            }  
+            }
+        }  
     );
     
     params.forEach(param => {
         request.addParameter(param.name,param.type,param.value);
     });
 
-
-    branch = 'HE';
-
-    if (branch=="SJ")
-        SanJose.callProcedure(request);
-    else if (branch=="CA")
-        Cartago.callProcedure(request);
-    else if (branch=="HE"){
-
-        Heredia.callProcedure(request);
-    }
+    if (branch=="SJ") SanJose.callProcedure(request);
+    else if (branch=="CA") Cartago.callProcedure(request);
+    else if (branch=="HE") Heredia.callProcedure(request);
 };
 
     module.exports = ConnectDB;
