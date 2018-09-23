@@ -1,0 +1,60 @@
+<div>
+
+    <br>
+    <h1 class="text-green roboto-tittle">¡Realice el pedido que guste!</h1>
+    <div class="container">
+        <hr class="hr-green">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="text-green roboto-tittle">Productos disponibles</h1>
+                <hr class="hr-green">
+                <ul class="list-group">
+                    <li  class="list-group-item list-group-item-dark" *ngIf='buyEmpty()'>
+                        No hay paquetes disponibles para comprar
+                    </li>
+                    <li *ngFor="let package of packages" class="list-group-item">
+                            element
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h1 class="text-green roboto-tittle">Agregados al carrito</h1>
+                <hr class="hr-green">
+                <ul class="list-group">
+                    <li  class="list-group-item list-group-item-dark" *ngIf='cartEmpty()'>No elementos agregados al carrito</li>
+                    <li *ngFor="let package of packages" class="list-group-item">
+                            element
+                        </li></ul>
+                        </div>
+                        
+                        <div class="col">
+                            <h1 class="text-green roboto-tittle">Mis pedidos/paquetes</h1>
+                            <hr class="hr-green">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-dark" *ngIf='packageEmpty()'>No tienes paquetes aun...</li>
+                                <li *ngFor="let package of packages" class="list-group-item">
+                                    <h4 class="roboto-tittle">{{package.tipo}}</h4>
+                                    <span class="badge badge-primary badge-pill bg-primary client-span">
+                                        {{package.categoria}}
+                                    </span>
+                                    <span class="badge badge-primary badge-pill bg-warning client-span">
+                                        <i>Costo: {{package.valor}}</i>
+                                    </span>
+                                    <span class="badge badge-primary badge-pill bg-warning client-span" *ngIf="package.estado == 1">
+                                        <i>pendiente</i>
+                                    </span>
+                                    <span class="badge badge-primary badge-pill bg-success client-span" *ngIf="package.estado == 0">
+                                        <i>recibido</i>
+                                    </span> <br>
+                                    Total : {{package.monto_servicio + package.valor}} (servicio incluido)
+                                </li>
+                    </ul>
+                </div>
+
+        </div>
+    </div>
+
+</div>

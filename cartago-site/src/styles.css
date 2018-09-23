@@ -1,0 +1,81 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+.app-tittle{
+    color: #1e774a;   
+}
+
+.little-space{
+    width: 5px;
+}
+
+.date-picker-margin{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.btn{
+    border-radius: 0px;
+}
+
+.form-control{
+    border-radius: 0px;
+}
+
+
+.adm-container{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+
+
+.hr-white{
+    border-top: 1px solid white;
+}
+
+.bg-green{
+    background-color: #1e774a;
+}
+
+.adm-paginator{
+    margin: 0 auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.adm-page-item > a{
+    color: #1e774a;
+    
+}
+.adm-page-item > a:hover{
+    background-color: #e6ffe0;
+}
+
+
+.roboto-tittle{
+    font-family: 'roboto', sans-serif;
+    font-weight: 100 !important;
+}
+
+.loginbg{
+    background-image: url("assets/loginbg.png");
+    height: 100vh;
+}
+
+.all-v{
+    height:100vh;
+}
+
+.bg-white-50{
+    background-color: rgba(0,0,0,0.2);
+}
+
+.right-border{
+    border-right: 1px solid #1e774a;
+}
+
+.administrator-container{
+    padding-top: 50px;
+}

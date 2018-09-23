@@ -1,0 +1,41 @@
+<div class="bg-white all-v">
+    <div class="row">
+        <div class="col-3 right-border">
+            <br>
+        </div>
+        <div class="col-9"></div>
+    </div>
+    <div class="row">
+        <div class="col-3 right-border">
+            <div class="nav flex-column nav-pills adm-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active roboto-tittle" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home"
+                    aria-selected="true">Total recaudado</a>
+                <a class="nav-link roboto-tittle" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile"
+                    aria-selected="false">Paquetes por cliente</a>
+                <a class="nav-link roboto-tittle" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages"
+                    aria-selected="false">Registro promedio por cliente</a>
+                <a class="nav-link roboto-tittle" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings"
+                    aria-selected="false">Registro por mes</a>
+            </div>
+        </div>
+
+        <div class="col-9">
+            <div class="tab-content adm-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <adm-totals></adm-totals>
+                </div>
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <adm-product-per-client></adm-product-per-client>
+                </div>
+                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <adm-product-average></adm-product-average>
+                </div>
+                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                    <adm-product-registry-monthly></adm-product-registry-monthly>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

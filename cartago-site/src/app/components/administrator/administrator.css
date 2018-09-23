@@ -1,0 +1,26 @@
+.adm-pills{
+    border-radius: 0;
+    padding: 10px;
+}
+
+.adm-pills > .nav-link.active {
+    border-radius: 0;
+    background-color: #1e774a;
+    color: #ffffff;
+    transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+
+}
+
+.adm-pills > .nav-link {
+    border-radius: 0;
+    color: #1e774a;
+    /*
+    border-right: 1px solid;
+    border-color: #1e774a;
+    */    
+}
+
+.adm-title{
+    color: #1e774a;   
+}

@@ -1,0 +1,15 @@
+<div>
+
+  <app-header></app-header>
+  <div class="loginbg" *ngIf="isAdmin()">
+      <div class="container">
+          <app-administrator-v></app-administrator-v>
+      </div>
+  </div>
+  <div *ngIf="isClient()">
+        <div class="container">
+            <app-client></app-client>
+        </div>
+    </div>
+
+</div>

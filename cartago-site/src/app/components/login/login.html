@@ -1,0 +1,9 @@
+<div class="background">
+    <form class="app-login">
+        <p class="login-tittle">Inicio de sesión</p>
+        <hr class="hr-green">
+        <input [(ngModel)]="user.name" [ngModelOptions]="{standalone: true}" type="text" class="form-control"  placeholder="Usuario">
+        <input [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" type="password" class="form-control" placeholder="Contraseña">
+        <button type="submit"  (click)="login()" class="btn btn-success bg-green">Ingresar</button>
+    </form>
+</div>

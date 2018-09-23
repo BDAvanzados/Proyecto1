@@ -1,0 +1,11 @@
+<div >
+      <label class="sr-only">Rango de fechas a buscar: </label>
+      <!-- <input type="text" class="form-control" placeholder="Inserte el rango de fechas a buscar" bsDaterangepicker formControlName="range"
+        [(ngModel)]="dataRange" [bsConfig]="{ rangeInputFormat: 'YYYY-MM-DD' }" (bsValueChange)="sendMessage($event)" /> -->
+
+      desde: <input [(ngModel)]="datefrom" (ngModelChange)="sendMessage($event,0)" class="form-control" type="date" name="" id="">
+      hasta: <input [(ngModel)]="dateto" (ngModelChange)="sendMessage($event,1)" class="form-control" type="date" name="" id="">
+    <!-- <div>
+      <button type="submit" class="btn btn-success">Buscar</button>
+    </div> -->
+  </div>
