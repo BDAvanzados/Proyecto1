@@ -9,13 +9,14 @@ app.use(cors({credentials: true, origin: true}));
 var client = require('./apijs/client.js');
 var branch = require('./apijs/branch.js');
 var sign = require('./apijs/sign.js');
-var pkg = require('./apijs/package.js');
+var admi = require('./apijs/admi.js');
+var manager = require('./apijs/manager.js');
 
 app.use('/client', client);
 app.use('/branch', branch);
 app.use('/sign', sign);
-app.use('/pkg', pkg);
-
+app.use('/admi', admi);
+app.use('/manage', manager);
 
 
 app.use(function(req, res){

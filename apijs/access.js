@@ -54,7 +54,7 @@ ConnectDB = function(query,branch,callback){
                     });
                 }else {
                     console.log(err);
-                    callback({status:false ,error:'Cant acces the database'});
+                    callback({status:false ,error:'Cant acces the database',err:-1 });
                 }
             }else{
                 jsonArray = [];
@@ -81,16 +81,15 @@ ConnectST = function(str,params,branch,callback){
         if (err){
             console.log(branch +" caido")
             if (branch!="HE"){
-                ConnectST(query,"HE",function(json){
+                ConnectST(str,"HE",function(json){
                 callback(json);
                 });
             }else {
                 console.log(err);
-                callback({status:false ,error:'Cant acces StoreProcedure'})
+                callback({status:false ,error:'Cant acces StoreProcedure',err:-1 })
             }
         }else{
             jsonArray = [];
-            console.log(rows);
             rows.forEach(function (columns) {
                 var rowObject ={};
                 columns.forEach(function(column) {
