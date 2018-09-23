@@ -42,7 +42,7 @@ var SanJose = new Connection(SJConfig);
 var Cartago = new Connection(CAConfig);
 var Heredia = new Connection(HEConfig);
 
-var ConnectDB = function(query,branch,callback){
+ConnectDB = function(query,branch,callback){
 
     request = new Request(query,
         function(err, rowCount, rows){
@@ -75,32 +75,40 @@ var ConnectDB = function(query,branch,callback){
         else if (branch=="HE")Heredia.execSql(request);
     };
 
-var ConnectST = function(str,params,branch,callback){
+ConnectST = function(str,params,branch,callback){
 
     request = new Request(str,function(err, rowCount, rows){
-        if (err) callback({status:false ,error:'Cant acces StoreProcedure'});
-        else{ 
+        if (err){
+            console.log(branch +" caido")
+            if (branch!="HE"){
+                ConnectST(query,"HE",function(json){
+                callback(json);
+                });
+            }else {
+                console.log(err);
+                callback({status:false ,error:'Cant acces StoreProcedure'})
+            }
+        }else{
             jsonArray = [];
+            console.log(rows);
             rows.forEach(function (columns) {
-                    var rowObject ={};
-                    columns.forEach(function(column) {
-                        rowObject[column.metadata.colName] = column.value;
-                    });
-                    jsonArray.push(rowObject)
+                var rowObject ={};
+                columns.forEach(function(column) {
+                    rowObject[column.metadata.colName] = column.value;
+                });
+                jsonArray.push(rowObject)
             });
             callback(jsonArray);
-            }
+        }
         }  
     );
-    
     params.forEach(param => {
         request.addParameter(param.name,param.type,param.value);
     });
-
     if (branch=="SJ") SanJose.callProcedure(request);
     else if (branch=="CA") Cartago.callProcedure(request);
     else if (branch=="HE") Heredia.callProcedure(request);
-};
+}
 
-    module.exports = ConnectDB;
-    module.exports = ConnectST;
+module.exports.ConnectDB = ConnectDB;
+module.exports.ConnectST = ConnectST;

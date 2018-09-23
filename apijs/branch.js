@@ -2,7 +2,8 @@ var router = require('express').Router();
 var bodyParser = require("body-parser");
 
 
-var ConnectDB = require('./access.js');
+var ConnectDB = require('./access.js').ConnectDB;
+var ConnectST = require('./access.js').ConnectST;
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -10,8 +11,8 @@ router.use(bodyParser.json());
 //Obtiene la informacion de la sucursal en el sitio
 router.get ("/suc/:site", function(req, res){
     let site = req.params.site
-    let query = "select * from SUCURSAL"
-    //
+    let query = "SELECT * from sucursal WHERE id =\'"+site+"\'";
+    console.log(query);
     ConnectDB(query, site, function(jsonArray){
         res.send(jsonArray);
     });
@@ -20,7 +21,7 @@ router.get ("/suc/:site", function(req, res){
 //obtiene el total recaudado por una sucursal
 router.get('/total/:site', function (req, res) {
     let site = req.params.site
-    let query = "SELECT valor, monto_servicio FROM PAQUETE, SUCURSAL WHERE SUCURSAL.id = PAQUETE.sucurcal_id and PAQUETE.retirado = 1";
+    let query = "SELECT valor, monto_servicio FROM PAQUETE, SUCURSAL WHERE SUCURSAL.id = PAQUETE.sucursalId and PAQUETE.retirado = 1";
     let suma = 0;
     ConnectDB(query,site,function(jsonArray){            
         jsonArray.forEach(element => {

@@ -2,7 +2,7 @@ var router = require('express').Router();
 var bodyParser = require("body-parser");
 
 
-var ConnectDB = require('./access.js');
+var ConnectDB = require('./access.js').ConnectDB;
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());

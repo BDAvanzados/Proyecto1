@@ -2,8 +2,7 @@ var router = require('express').Router();
 var bodyParser = require("body-parser");
 var TYPES = require('tedious').TYPES;
 
-var ConnectDB = require('./access.js');
-var ConnectST = require('./access.js');
+var ConnectST = require('./access.js').ConnectST;
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
