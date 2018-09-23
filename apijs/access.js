@@ -51,7 +51,10 @@ var ConnectDB = function(query,branch,callback){
                     ConnectDB(query,"HE",function(json){
                     callback(json);
                     });
-                }else callback({error:'Cant acces the database'});
+                }else {
+                    console.log(err);
+                    callback({status:false ,error:'Cant acces the database'});
+                }
             }else{
                 jsonArray = [];
                 rows.forEach(function (columns) {

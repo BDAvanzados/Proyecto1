@@ -35,9 +35,8 @@ router.get ("/:site", function (req, res){
 
 //obtiene el total recaudado por una sucursal
 router.get('/:site/total', function (req, res) {
-    var site = req.params.site
-    query = "SELECT valor, monto_servicio FROM PAQUETE, SUCURSAL WHERE SUCURSAL.id = PAQUETE.sucurcal_id and PAQUETE.retirado = 1";
-    var total = 0;
+    let site = req.params.site
+    let query= "SELECT distinct(SUCURSAL.nombre), SUM(PAQUETE.valor + PAQUETE.monto_servicio) FROM PAQUETE, SUCURSAL WHERE SUCURSAL.id ="+ " SUCURSAL.id =  PAQUETE.sucurcal_id and PAQUETE.retirado = 1 GROUP BY SUCURSAL.nombr e";
     ConnectDB(query,site,function(jsonArray){            
         jsonArray.forEach(element => {
             total += element["valor"] + element["monto_servicio"];
@@ -45,7 +44,6 @@ router.get('/:site/total', function (req, res) {
         res.send({total});
     });
   });
-
 
 //obtiene el total recaudado por una sucursal en cierto rango de fechas
 router.get('/:site/total/:initialDate/:endDate', function (req, res) {
