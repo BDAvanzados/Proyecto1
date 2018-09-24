@@ -32,7 +32,6 @@ router.get ("/total/:site/:type/:startDate/:finishDate/", function(req, res){
 //-> igual al enterior, diferentes parametros
 
 //Lista de 3 mejores clientes en un periodo (los de mayor monto de paquetes)
-
 router.get ("/top3/:site/:startDate/:finishDate/", function(req, res){
     let site = req.params.site;
     let startDate = req.params.startDate;

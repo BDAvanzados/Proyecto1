@@ -81,7 +81,39 @@ router.get ("/totalpermonth/:site/:type/:month/", function(req, res){
 
 
 //registrar entrada de paquetes
+router.post('/addpkg', function(req, res) {
+    let clientId = req.clientId;
+    let sucursalId = req.sucursalId;
+    let pkgs = req.pkgs;
+    let id = new Date().getTime().toString().slice(2,12);
+    let str = "clientPackages";
+    pkgs.forEach(pkg => {
+        params = [
+            {name:'sucursal', type: TYPES.VarChar,value:site},
+            {name:'',type: TYPES.VarChar,value:startDate}, //2018-09-15
+            {name:'',type: TYPES.VarChar,value:finishDate}, //2018-09-20
+            {name:'',type: TYPES.VarChar,value:id} //2018-09-20
+        ];
+        
+        if(sucursalId=="HE") {
+            ConnectST(str, params, sucursalId, function(jsonArray){
+                res.send(jsonArray);
+            });
+        }else {
+            ConnectST(str, params, "HE", function(jsonArray){
+                ConnectST(str, params, sucursalId, function(jsonArray){
+                    res.send(jsonArray);
+            });
+            });
+        }
+    });
+
+   
+});
+
 //registrar salida de paquetes
+
+
 
 
 //////////////////////////////////////////////////////////////
@@ -105,13 +137,23 @@ router.get ("/clientspkg/:site/:startDate/:finishDate/", function(req, res){
 
 
 
-//Obtiene los paquetes 
+//Obtiene todos los paquetes 
 router.get ("/pkgs/:site/", function(req, res){
     let site = req.params.site;
     let query = "SELECT * from paquete WHERE sucursalId =\'"+site+"\'";
     ConnectDB(query, site, function(jsonArray){
         res.send(jsonArray);
     });
+});
+
+
+
+//actualizar estado paquete
+router.post('/addpkg', function(req, res) {
+    var clientId = req.clientId;
+    var sucursalId = req.sucursalId;
+    var pkgs = req.pkgs;
+    
 });
 
 module.exports = router;
