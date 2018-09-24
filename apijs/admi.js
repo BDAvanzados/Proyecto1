@@ -81,20 +81,19 @@ router.get ("/totalpermonth/:site/:type/:month/", function(req, res){
 
 
 //registrar entrada de paquetes
-router.post('/addpkg', function(req, res) {
-    let clientId = req.clientId;
-    let sucursalId = req.sucursalId;
-    let pkgs = req.pkgs;
-    let id = new Date().getTime().toString().slice(2,12);
-    let str = "clientPackages";
+router.get('/addpkg/:sucursalId/:clientId/:pkgs/:date', function(req, res) {
+    let clientId = req.params.clientId;
+    let sucursalId = req.params.sucursalId;
+    let pkgs = req.params.pkgs;
+    let date =req.params.date;
+    let str = "pr_insertarPaqueteCliente";
     pkgs.forEach(pkg => {
         params = [
-            {name:'sucursal', type: TYPES.VarChar,value:site},
-            {name:'',type: TYPES.VarChar,value:startDate}, //2018-09-15
-            {name:'',type: TYPES.VarChar,value:finishDate}, //2018-09-20
-            {name:'',type: TYPES.VarChar,value:id} //2018-09-20
+            {name:'paqueteId', type: TYPES.VarChar,value:pkg},
+            {name:'sucursalId',type: TYPES.VarChar,value:site}, //2018-09-15
+            {name:'clientId',type: TYPES.VarChar,value:clientId},
+            {name:'FechaSolicitud',type: TYPES.VarChar,value:date}
         ];
-        
         if(sucursalId=="HE") {
             ConnectST(str, params, sucursalId, function(jsonArray){
                 res.send(jsonArray);
@@ -107,13 +106,32 @@ router.post('/addpkg', function(req, res) {
             });
         }
     });
-
-   
 });
 
 //registrar salida de paquetes
-
-
+router.get('/updatepkg/:sucursalId/:clientId/:pkg/:date', function(req, res) {
+    let clientId = req.params.clientId;
+    let sucursalId = req.params.sucursalId;
+    let pkg = req.params.pkg;
+    let date =req.params.date;
+    let str = "pr_retirarPaquete";
+    params = [
+        {name:'paqueteId', type: TYPES.VarChar,value:pkg},
+        {name:'sucursalId',type: TYPES.VarChar,value:sucursalId}, //2018-09-15
+        {name:'clientId',type: TYPES.VarChar,value:clientId},
+        {name:'fecharecepcion',type: TYPES.VarChar,value:date}
+    ];
+    if(sucursalId=="HE") {
+        ConnectST(str, params, sucursalId, function(jsonArray){
+        });
+    }else {
+        ConnectST(str, params, "HE", function(jsonArray){
+        });
+        ConnectST(str, params, sucursalId, function(jsonArray){
+            res.send(jsonArray);
+    });
+    }
+});
 
 
 //////////////////////////////////////////////////////////////
@@ -134,9 +152,6 @@ router.get ("/clientspkg/:site/:startDate/:finishDate/", function(req, res){
     });
 });
 
-
-
-
 //Obtiene todos los paquetes 
 router.get ("/pkgs/:site/", function(req, res){
     let site = req.params.site;
@@ -146,14 +161,5 @@ router.get ("/pkgs/:site/", function(req, res){
     });
 });
 
-
-
-//actualizar estado paquete
-router.post('/addpkg', function(req, res) {
-    var clientId = req.clientId;
-    var sucursalId = req.sucursalId;
-    var pkgs = req.pkgs;
-    
-});
 
 module.exports = router;

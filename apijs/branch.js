@@ -20,14 +20,6 @@ router.get ("/suc/:site", function(req, res){
 });
 
 
-//registrar un paquete
-router.post('/addpkg', function(req, res) {
-    var clientId = req.clientId;
-    var sucursalId = req.sucursalId;
-    var pkgs = req.pkgs;
-
-});
-
   module.exports = router;
 
   
