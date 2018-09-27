@@ -84,28 +84,36 @@ router.get ("/totalpermonth/:site/:type/:month/", function(req, res){
 router.get('/addpkg/:sucursalId/:clientId/:pkgs/:date', function(req, res) {
     let clientId = req.params.clientId;
     let sucursalId = req.params.sucursalId;
-    let pkgs = req.params.pkgs;
+    let pkg = req.params.pkgs;
     let date =req.params.date;
     let str = "pr_insertarPaqueteCliente";
-    pkgs.forEach(pkg => {
-        params = [
-            {name:'paqueteId', type: TYPES.VarChar,value:pkg},
-            {name:'sucursalId',type: TYPES.VarChar,value:site}, //2018-09-15
-            {name:'clientId',type: TYPES.VarChar,value:clientId},
-            {name:'FechaSolicitud',type: TYPES.VarChar,value:date}
-        ];
-        if(sucursalId=="HE") {
-            ConnectST(str, params, sucursalId, function(jsonArray){
+
+    var params = [
+        {name:'paqueteId', type: TYPES.VarChar,value:pkg},
+        {name:'sucursalId',type: TYPES.VarChar,value:sucursalId}, //2018-09-15
+        {name:'clientId',type: TYPES.VarChar,value:clientId},
+        {name:'FechaSolicitud',type: TYPES.VarChar,value:date}
+    ];
+    
+    var params2 = [
+        {name:'paqueteId', type: TYPES.VarChar,value:pkg},
+        {name:'sucursalId',type: TYPES.VarChar,value:sucursalId}, //2018-09-15
+        {name:'clientId',type: TYPES.VarChar,value:clientId},
+        {name:'FechaSolicitud',type: TYPES.VarChar,value:date}
+    ];
+
+    console.log(params);
+    if(sucursalId=="HE") {
+        ConnectST(str, params, sucursalId, function(jsonArray){
+        });
+    }else {
+        ConnectST(str, params, "HE", function(jsonArray){
+            ConnectST(str, params2, sucursalId, function(jsonArray){
                 res.send(jsonArray);
-            });
-        }else {
-            ConnectST(str, params, "HE", function(jsonArray){
-                ConnectST(str, params, sucursalId, function(jsonArray){
-                    res.send(jsonArray);
-            });
-            });
-        }
-    });
+            })
+        });
+        
+    }
 });
 
 //registrar salida de paquetes
@@ -121,15 +129,22 @@ router.get('/updatepkg/:sucursalId/:clientId/:pkg/:date', function(req, res) {
         {name:'clientId',type: TYPES.VarChar,value:clientId},
         {name:'fecharecepcion',type: TYPES.VarChar,value:date}
     ];
+    params2 = [
+        {name:'paqueteId', type: TYPES.VarChar,value:pkg},
+        {name:'sucursalId',type: TYPES.VarChar,value:sucursalId}, //2018-09-15
+        {name:'clientId',type: TYPES.VarChar,value:clientId},
+        {name:'fecharecepcion',type: TYPES.VarChar,value:date}
+    ];
     if(sucursalId=="HE") {
         ConnectST(str, params, sucursalId, function(jsonArray){
         });
     }else {
         ConnectST(str, params, "HE", function(jsonArray){
+            ConnectST(str, params2, sucursalId, function(jsonArray){
+                res.send(jsonArray);
+            })
         });
-        ConnectST(str, params, sucursalId, function(jsonArray){
-            res.send(jsonArray);
-    });
+        
     }
 });
 
@@ -155,7 +170,7 @@ router.get ("/clientspkg/:site/:startDate/:finishDate/", function(req, res){
 //Obtiene todos los paquetes 
 router.get ("/pkgs/:site/", function(req, res){
     let site = req.params.site;
-    let query = "SELECT * from paquete WHERE sucursalId =\'"+site+"\'";
+    let query = "SELECT * from paquete";
     ConnectDB(query, site, function(jsonArray){
         res.send(jsonArray);
     });
